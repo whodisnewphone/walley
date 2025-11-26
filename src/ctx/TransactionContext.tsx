@@ -4,23 +4,30 @@ import transactionData from '../data/transactions.json'
 
 type iTransactionContext = {
   transactions: Transaction[]
-  setTransactions: () => Dispatch<SetStateAction<TransactionsData>>
+  setTransactions: (transactions: Transaction[]) => Dispatch<SetStateAction<TransactionsData>>
+  displayedTransactions: Transaction[]
+  setDisplayedTransactions: (transactions: Transaction[]) => Dispatch<SetStateAction<TransactionsData>>
 }
 
 const defaultTransactions = {
   transactions: [],
-  setTransactions: () => {}
+  setTransactions: () => {},
+  displayedTransactions: [],
+  setDisplayedTransactions: () => {}
 }
 
 export const TransactionContext = createContext<iTransactionContext>(defaultTransactions)
 
 const TransactionContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [transactions, setTransactions] = useState<Array<Transaction>>(transactionData.transactions)
+  const [displayedTransactions, setDisplayedTransactions] = useState<Array<Transaction>>(transactionData.transactions)
 
   return (
     <TransactionContext value={{
       transactions,
       setTransactions,
+      displayedTransactions,
+      setDisplayedTransactions
     }}>
       { children }
     </TransactionContext>
