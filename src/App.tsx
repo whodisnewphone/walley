@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import './styles/global.scss';
+import Dashboard from './pages/Dashboard';
+import TransactionContextProvider from './ctx/TransactionContext';
 
 function App() {
   return (
@@ -9,10 +11,12 @@ function App() {
       </a>
       <div className="app">
         <main id="main-content">
-          <Routes>
-            <Route path="/" element={<div>My Payments Dashboard - Start building here!</div>} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
+          <TransactionContextProvider>
+            <Routes>
+              <Route path="/" element={<Dashboard/>} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </TransactionContextProvider>
         </main>
       </div>
     </Router>
