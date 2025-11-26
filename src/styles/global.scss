@@ -1,5 +1,5 @@
-@use './variables' as *;
-@use './mixins' as *;
+@use "./variables" as *;
+@use "./mixins" as *;
 
 * {
   box-sizing: border-box;
@@ -23,6 +23,43 @@ body {
 
 #root {
   min-height: 100vh;
+  margin-left: auto;
+  margin-right: auto;
+
+  @include desktop {
+    max-width: $breakpoint-wide;
+  }
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vw;
+
+  @include truncate;
+}
+
+#main-content,
+header {
+  margin: $spacing-sm;
+
+  @include tablet {
+    margin: $spacing-md;
+  }
+
+  @include desktop {
+    margin: $spacing-xl;
+  }
+}
+
+#main-content {
+  margin-bottom: 136px;
+}
+
+ul,
+li {
+  list-style: unset;
+  list-style-type: none;
 }
 
 // Ensure links are accessible
@@ -40,8 +77,9 @@ a {
 // Button reset
 button {
   font-family: inherit;
-  
+
   @include focus-visible;
+  @include button-base;
 }
 
 // Form elements
@@ -50,7 +88,7 @@ select,
 textarea {
   font-family: inherit;
   font-size: inherit;
-  
+
   @include focus-visible;
 }
 
@@ -74,4 +112,135 @@ textarea {
     overflow: visible;
     white-space: normal;
   }
+}
+
+.card {
+  @include card;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: $color-primary-dark;
+  color: $color-primary-light;
+  text-align: center;
+  margin-top: auto;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 32px;
+
+  @include desktop {
+    max-width: $breakpoint-wide;
+  }
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  ul {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+  }
+}
+
+.spinner-container {
+  @include center-content;
+  margin-top: 3rem;
+
+  .spinner {
+    @include spinner;
+  }
+}
+
+.no-content-container {
+  display: flex;
+  flex-direction: row;
+  gap: $spacing-md;
+  align-items: center;
+
+  svg {
+    height: 2rem;
+    width: 2rem;
+    stroke: $color-info;
+  }
+}
+
+.transactions-container {
+  display: grid;
+  row-gap: 0.75rem;
+  margin: 1rem 0;
+
+  @include tablet {
+    .card:nth-child(odd) {
+      grid-column: 1 / span 2;
+    }
+    .card:nth-child(even) {
+      grid-column: 3 / span 2;
+    }
+  }
+}
+
+.transation-grid {
+  display: grid;
+
+  .grid-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+}
+
+.filter-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.date-picker-container {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.MuiPaper-root {
+  background-color: $color-primary-light !important;
+}
+
+.drawer-content {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+span.error {
+  color: $color-error;
+  font-weight: $font-weight-bold;
+}
+
+.card.warning {
+  color: $color-warning;
+  border-color: $color-warning;
+  background-color: $color-warning-light;
+}
+
+.card.error {
+  color: $color-error;
+  border-color: $color-error;
+  background-color: $color-error-light;
+}
+
+.card.success {
+  color: $color-success;
+  border-color: $color-success;
+  background-color: $color-success-light;
 }
