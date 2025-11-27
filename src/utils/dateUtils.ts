@@ -49,6 +49,22 @@ export const isPastDate = (dateString: string): boolean => {
 };
 
 /**
+ * Check if a date is X days in the past
+ * @param dateString - ISO date string
+ * @param numberOfDays - number of days compared to
+ * @returns true if date is in the past by lesser than or equal to @numberOfDays
+ */
+export const isXDaysInThePast = (dateString: string, numberOfDays: string): boolean => {
+  const date = new Date(dateString);
+  const now = new Date();
+
+  const diffInMs = now.getTime() - date.getTime();
+  const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+
+  return diffInDays <= +numberOfDays;
+};
+
+/**
  * Check if a date is within a date range
  * @param dateString - ISO date string to check
  * @param startDate - Start of range (ISO date string)

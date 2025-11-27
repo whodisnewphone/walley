@@ -3,8 +3,15 @@ import { TransactionContext } from "../ctx/TransactionContext"
 import useFilter from "../hooks/useFilter"
 
 const Dashboard = () => {
-  const {displayedTransactions} = useContext(TransactionContext)
-  const {filterByTransactionStatus} = useFilter()
+  const { displayedTransactions } = useContext(TransactionContext)
+  const { filterByTransactionStatus, filterByPaymentType, filterByDate, filterByCustomDate } = useFilter()
+
+  const startFilterByCustomDate = (formData: { get: (arg0: string) => any }) => {
+    const inputDate = formData.get("customDate");
+    const date = new Date(inputDate).toISOString()
+    filterByCustomDate(date)
+    //todo sanitize input
+  }
 
   return (
     <>
@@ -12,9 +19,9 @@ const Dashboard = () => {
 
     <button>Upcoming payments</button>
     <section>
-      {/* <button onClick={filterByTransactionStatus()} type="button" value="All">
+      <button onClick={() => filterByTransactionStatus()} type="button" value="All">
         VIEW ALL
-      </button> */}
+      </button>
       <button onClick={() => filterByTransactionStatus("completed")} type="button" value="completed">
         COMPLETED
       </button>
@@ -31,12 +38,37 @@ const Dashboard = () => {
         ACTIVE
       </button>
     </section>
-    {/* <button onClick={filterByTransactionStatus('completed')}>Past payments</button> */}
-{/* 
-    <button>Filter by status</button>
 
-    <button>Filter by date range</button>
-    <button>Filter by payment type</button> */}
+    <section>
+      <button onClick={() => filterByPaymentType()} type="button" value="All">
+        VIEW ALL
+      </button>
+      <button onClick={() => filterByPaymentType("full")} type="button" value="full">
+        FULL
+      </button>
+      <button onClick={() => filterByPaymentType("installment")} type="button" value="installment">
+        INSTALLMENTS
+      </button>
+    </section>
+
+    <section>
+      <button onClick={() => filterByDate("30")} type="button" value="30">
+        LAST 30 DAYS
+      </button>
+      <button onClick={() => filterByDate("90")} type="button" value="90">
+        LAST 90 DAYS
+      </button>
+      <button onClick={() => filterByDate("")} type="button" value="364">
+        LAST YEAR
+      </button>
+      <form action={startFilterByCustomDate}>
+        <label>BEFORE DATE:</label>
+        <input type="date" name="customDate"/>
+        <button type="submit">SEE CUSTOM DATE</button>
+      </form>
+      
+    </section>
+
     {
       displayedTransactions.map(transaction => {
         return(
