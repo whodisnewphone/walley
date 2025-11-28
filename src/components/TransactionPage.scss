@@ -1,0 +1,36 @@
+@use '../styles/variables' as *;
+
+table {
+  background-color:  #e8e1f0;
+  border-radius: $radius-lg;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+  border-collapse: collapse;
+  border-style: hidden;
+}
+
+th, td {
+  text-align: start;
+  padding: $spacing-md;
+  
+}
+tr {
+  border: 1px solid black;
+}
+
+td {
+  font-size: $font-size-lg;
+}
+
+h3, h4 {
+  text-align: center;
+  padding: $spacing-md
+}
+
+.installments {
+  th, td {
+    padding: $spacing-sm
+  }
+}

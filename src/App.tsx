@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import './styles/global.scss';
 import Dashboard from './pages/Dashboard';
 import TransactionContextProvider from './ctx/TransactionContext';
+import TransactionPage from './components/TransactionPage';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <TransactionContextProvider>
             <Routes>
               <Route path="/" element={<Dashboard/>} />
+              <Route path="/transaction/:id" element={<TransactionPage/>} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </TransactionContextProvider>
