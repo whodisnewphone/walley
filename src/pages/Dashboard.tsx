@@ -1,6 +1,8 @@
 import { useContext } from "react"
 import { TransactionContext } from "../ctx/TransactionContext"
 import useFilter from "../hooks/useFilter"
+import { formatDate } from "../utils/dateUtils"
+import TransactionCard from "../components/TransactionCard"
 
 const Dashboard = () => {
   const { displayedTransactions } = useContext(TransactionContext)
@@ -72,14 +74,7 @@ const Dashboard = () => {
     {
       displayedTransactions.map(transaction => {
         return(
-        <div className="transactionContainer" key={transaction.id}>
-          <h6>{transaction.totalAmount}</h6>
-          <p className="font-bold">{transaction.merchantName}</p>
-          <p>{transaction.purchaseDate}</p>
-          <p>{transaction.status}</p>
-          <p>{transaction.paymentMethod.type}</p>
-          <button>See more</button>
-        </div>
+          <TransactionCard transaction={transaction}/>
         )
       })
     }
