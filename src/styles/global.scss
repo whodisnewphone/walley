@@ -79,3 +79,39 @@ textarea {
 .bold {
   font-weight: $font-weight-bold;
 }
+
+.text-center {
+  text-align: center;
+}
+
+button {
+  background: #E9F0E1;
+  border: 0;
+  border-radius: 3px;
+  cursor: pointer;
+  display: inline-block;
+  line-height: 1.8;
+  outline: transparent;
+  padding: 0 10px;
+  text-align: center;
+  text-decoration: none;
+  transition: box-shadow .2s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  margin: $spacing-sm 2px;
+  font-size: $font-size-base
+}
+
+button:not([disabled]):focus {
+  box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(206, 191, 223, 1), .125rem .125rem 1rem rgba(240, 225, 226, 1);
+}
+
+button:not([disabled]):hover {
+  box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(206, 191, 223, 1), .125rem .125rem 1rem rgba(240, 225, 226, 1);
+}
+
+.buttonActive {
+  box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(206, 191, 223, 1), .125rem .125rem 1rem rgba(240, 225, 226, 1);
+}

@@ -4,6 +4,7 @@ import CreditCardIcon from '../assets/svg/credit_card.svg?react';
 import DebitCardIcon from '../assets/svg/debit_card.svg?react';
 import "./TransactionCard.scss";
 import { useNavigate } from "react-router-dom";
+import { formatCurrency } from "../utils/currencyUtils";
 
 const TransactionCard = ({transaction}) => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const TransactionCard = ({transaction}) => {
       <a onClick={navigateToTransaction}>
         <div className="transactionDetails">
           <div>
-            <p className="transactionAmount">formatCurrency({transaction.totalAmount})</p> 
+            <p className="transactionAmount">{formatCurrency(transaction.totalAmount)}</p> 
           </div>
           <div>
             <p className="transactionMerchant">{transaction.merchantName}</p>

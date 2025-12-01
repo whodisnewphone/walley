@@ -6,23 +6,24 @@ import TransactionPage from './components/TransactionPage';
 
 function App() {
   return (
-    
+    <TransactionContextProvider>
     <Router>
       <a href="#main-content" className="skip-link">
         Skip to main content
       </a>
       <div className="app">
         <main id="main-content">
-          <TransactionContextProvider>
+         
             <Routes>
               <Route path="/" element={<Dashboard/>} />
-              <Route path="/transaction/:id" element={<TransactionPage/>} />
+              <Route path="/transaction/:id" element={<TransactionPage />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
-          </TransactionContextProvider>
+          
         </main>
       </div>
     </Router>
+    </TransactionContextProvider>
   );
 }
 

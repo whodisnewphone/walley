@@ -1,5 +1,9 @@
 @use '../styles/variables' as *;
 
+body {
+  background-color: #F0E1E2;
+}
+
 table {
   background-color:  #e8e1f0;
   border-radius: $radius-lg;

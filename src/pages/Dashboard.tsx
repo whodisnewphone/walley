@@ -1,84 +1,188 @@
-import { useContext } from "react"
+import { useContext, useEffect, useState, type FormEvent } from "react"
 import { TransactionContext } from "../ctx/TransactionContext"
-import useFilter from "../hooks/useFilter"
-import { formatDate } from "../utils/dateUtils"
 import TransactionCard from "../components/TransactionCard"
+import useFilter from "../hooks/useFilter"
+import { getDateInThePast } from "../utils/dateUtils"
 
 const Dashboard = () => {
-  const { displayedTransactions } = useContext(TransactionContext)
-  const { filterByTransactionStatus, filterByPaymentType, filterByDate, filterByCustomDate } = useFilter()
+  const { 
+    statusFilter, setStatusFilter, paymentTypeFilter, 
+    setPaymentTypeFilter, dateFilter, setDateFilter,
+    displayedTransactions 
+  } = useContext(TransactionContext)
+  const { filterByCriteria } = useFilter()
 
-  const startFilterByCustomDate = (formData: { get: (arg0: string) => any }) => {
-    const inputDate = formData.get("customDate");
-    const date = new Date(inputDate).toISOString()
-    filterByCustomDate(date)
-    //todo sanitize input
+  const [dateFilterDouble, setDateFilterDouble] = useState<string>(null)
+  const [dateInputValue, setDateInputValue] = useState<string>("")
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
+
+  const startFilterByCustomDate = (e: FormEvent) => {
+    e.preventDefault()
+    const date = new Date(dateInputValue).toISOString();
+    if (!date) {
+      alert("Incorrect date format, please try again")
+    }
+    setDateFilter(date)
+    setIsSubmitted(true)
+    setDateFilterDouble("")
   }
+
+  const startFilterByDays = (days: string) => {
+    setDateFilterDouble(days)
+    setDateInputValue("")
+
+    let pastDate = getDateInThePast(days)
+    setDateFilter(pastDate)
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDateInputValue(e.target.value);
+    setIsSubmitted(false); 
+  }
+
+  useEffect(() => {
+    filterByCriteria()
+  }, [statusFilter, paymentTypeFilter, dateFilter])
 
   return (
     <>
-    <div>My Payments Dashboard</div>
+    <div className="text-center">My Payments Dashboard</div>
+    <>
+      <p>Filter by status</p> 
+      <section className="filterContainer">
+        <button 
+          onClick={() => setStatusFilter(null)} 
+          type="button" 
+          value="All"
+          className={statusFilter === null ? "buttonActive" : ""}
+        >
+          VIEW ALL
+        </button>
+        <button 
+          onClick={() => setStatusFilter("completed")} 
+          type="button" 
+          name="completed" 
+          className={statusFilter === "completed" ? "buttonActive" : ""}
+        >
+          COMPLETED
+        </button>
+        <button 
+          onClick={() => setStatusFilter("pending")} 
+          type="button" 
+          name="pending"
+          className={statusFilter === "pending" ? "buttonActive" : ""}
+        >
+          PENDING
+        </button>
+        <button 
+          onClick={() => setStatusFilter("failed")} 
+          type="button" 
+          name="failed"
+          className={statusFilter === "failed" ? "buttonActive" : ""}
+        >
+          FAILED
+        </button>
+        <button 
+          onClick={() => setStatusFilter("cancelled")} 
+          type="button" 
+          name="cancelled"
+          className={statusFilter === "cancelled" ? "buttonActive" : ""}
+        >
+          CANCELLED
+        </button>
+        <button 
+          onClick={() => setStatusFilter("active")} 
+          type="button" 
+          name="active"
+          className={statusFilter === "active" ? "buttonActive" : ""}
+        >
+          ACTIVE
+        </button>
+      </section>
 
-    <button>Upcoming payments</button>
-    <section>
-      <button onClick={() => filterByTransactionStatus()} type="button" value="All">
-        VIEW ALL
-      </button>
-      <button onClick={() => filterByTransactionStatus("completed")} type="button" value="completed">
-        COMPLETED
-      </button>
-      <button onClick={() => filterByTransactionStatus("pending")} type="button" value="pending">
-        PENDING
-      </button>
-      <button onClick={() => filterByTransactionStatus("failed")} type="button" value="failed">
-        FAILED
-      </button>
-      <button onClick={() => filterByTransactionStatus("cancelled")} type="button" value="cancelled">
-        CANCELLED
-      </button>
-      <button onClick={() => filterByTransactionStatus("active")} type="button" value="active">
-        ACTIVE
-      </button>
-    </section>
+      <p>Filter by payment type</p>
 
-    <section>
-      <button onClick={() => filterByPaymentType()} type="button" value="All">
-        VIEW ALL
-      </button>
-      <button onClick={() => filterByPaymentType("full")} type="button" value="full">
-        FULL
-      </button>
-      <button onClick={() => filterByPaymentType("installment")} type="button" value="installment">
-        INSTALLMENTS
-      </button>
-    </section>
+      <section>
+        <button
+          onClick={() => setPaymentTypeFilter(null)} 
+          type="button" 
+          value="All"
+          className={paymentTypeFilter === null ? "buttonActive" : ""}
+        >
+          VIEW ALL
+        </button>
+        <button 
+          onClick={() => setPaymentTypeFilter("full")} 
+          type="button" 
+          name="full"
+          className={paymentTypeFilter === "full" ? "buttonActive" : ""}
+        >
+          FULL
+        </button>
+        <button 
+          onClick={() => setPaymentTypeFilter("installment")} 
+          type="button" 
+          value="installment"
+          className={paymentTypeFilter === "installment" ? "buttonActive" : ""}
+        >
+          INSTALLMENTS
+        </button>
+      </section>
 
-    <section>
-      <button onClick={() => filterByDate("30")} type="button" value="30">
-        LAST 30 DAYS
-      </button>
-      <button onClick={() => filterByDate("90")} type="button" value="90">
-        LAST 90 DAYS
-      </button>
-      <button onClick={() => filterByDate("")} type="button" value="364">
-        LAST YEAR
-      </button>
-      <form action={startFilterByCustomDate}>
-        <label>BEFORE DATE:</label>
-        <input type="date" name="customDate"/>
-        <button type="submit">SEE CUSTOM DATE</button>
-      </form>
-      
-    </section>
+      <p>Filter by date</p>
+      <section>
+        <button 
+          onClick={() => startFilterByDays("30")} 
+          type="button" 
+          value="30days"
+          className={dateFilterDouble === "30" ? "buttonActive" : ""}
+        >
+          LAST 30 DAYS
+        </button>
+        <button 
+          onClick={() => startFilterByDays("90")} 
+          type="button" 
+          name="90days"
+          className={dateFilterDouble === "90" ? "buttonActive" : ""}
+        >
+          LAST 90 DAYS
+        </button>
+        <button 
+          onClick={() => startFilterByDays("365")} 
+          type="button" 
+          name="lastyear"
+          className={dateFilterDouble === "365" ? "buttonActive" : ""}>
+          LAST YEAR
+        </button>
+        <form onSubmit={startFilterByCustomDate}>
+          <label>BEFORE DATE: </label>
+          <input 
+            type="date" 
+            name="customDate" 
+            value={dateInputValue} 
+            onChange={handleInputChange}
+          />
+          <span><button type="submit">GO</button></span>
+        </form>
+      </section>
+    </>
 
+    {
+      displayedTransactions?.length === 0 &&
+      <p className="text-center">No transactions found</p>
+    }
+    {
+      displayedTransactions?.length >0 &&
+      <p className="text-center">{displayedTransactions.length} transactions found</p>
+    }
     {
       displayedTransactions.map(transaction => {
         return(
-          <TransactionCard transaction={transaction}/>
+          <TransactionCard transaction={transaction} key={transaction.id}/>
         )
       })
+      //todo add pagination
     }
-   
     </>
   )
 }

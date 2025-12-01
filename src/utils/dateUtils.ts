@@ -64,6 +64,16 @@ export const isXDaysInThePast = (dateString: string, numberOfDays: string): bool
   return diffInDays <= +numberOfDays;
 };
 
+export const getDateInThePast = (numberOfDays: string): string => {
+  const now = new Date();
+  
+  const diffInDays = Math.floor(+numberOfDays * (1000 * 60 * 60 * 24));
+  const diffInMs = now.getTime() - diffInDays;
+  const dateInThePast = new Date(diffInMs);
+
+  return dateInThePast.toISOString();
+};
+
 /**
  * Check if a date is within a date range
  * @param dateString - ISO date string to check

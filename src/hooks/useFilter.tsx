@@ -1,46 +1,49 @@
 import { useContext } from "react"
 import { TransactionContext } from "../ctx/TransactionContext"
-import type { PaymentType, TransactionStatus } from "../types/transaction"
-import { isDateInRange, isXDaysInThePast } from "../utils/dateUtils"
+import { isDateInRange } from "../utils/dateUtils"
 
 const useFilter = () => {
-  const {transactions, setDisplayedTransactions} = useContext(TransactionContext)
+  const { transactions, setDisplayedTransactions, 
+    statusFilter, paymentTypeFilter, dateFilter } = useContext(TransactionContext)
 
-  const filterByTransactionStatus = (status ?: TransactionStatus) => {
-    if (status) {
-      setDisplayedTransactions(transactions.filter((transaction) => transaction.status === status));
-      return
+  const filterByCriteria = () => {
+    let activeFilters = []
+
+    //build up all the filter values so you only traverse the array once
+    if (statusFilter) {
+      activeFilters['status'] = statusFilter
     }
-   
-    setDisplayedTransactions(transactions)
-  }
 
-  const filterByPaymentType = (paymentType ?: PaymentType) => {
-    if (paymentType) {
-      setDisplayedTransactions(transactions.filter((transaction) => transaction.paymentType === paymentType));
-      return
+    if (paymentTypeFilter) {
+      activeFilters['paymentType'] = paymentTypeFilter
     }
-   
-    setDisplayedTransactions(transactions)
-  }
 
-  const filterByDate = (days ?: string) => {
-    if (days) {
-      setDisplayedTransactions(transactions.filter((transaction) => isXDaysInThePast(transaction.purchaseDate, days)));
-      return
+    if (dateFilter) {
+      activeFilters['purchaseDate'] = dateFilter
     }
-   
-    setDisplayedTransactions(transactions)
+
+    let activeFiltersKeys = Object.keys(activeFilters)
+
+    // if there are no active filters, display all the transactions
+    if (activeFilters.length === 0) {
+      setDisplayedTransactions(transactions)
+    }
+
+    let filteredData = transactions.filter(item => {
+      // if (activeFiltersKeys.length === 1 && dateFilter) {
+      //   return isDateInRange(item.purchaseDate, dateFilter, new Date().toISOString())
+      // }
+      return activeFiltersKeys.every(key => {
+        if (key === "purchaseDate") {
+          return isDateInRange(item.purchaseDate, dateFilter, new Date().toISOString())
+        }
+        return item[key] === activeFilters[key];
+      });
+    });
+    setDisplayedTransactions(filteredData)
   }
 
-  const filterByCustomDate = (customDate : string) => {
-    setDisplayedTransactions(transactions.filter((transaction) =>
-      !isDateInRange(transaction.purchaseDate, customDate, new Date().toISOString())
-    
-    ))
-  }
-
-  return { filterByTransactionStatus, filterByPaymentType, filterByDate, filterByCustomDate }
+  return { filterByCriteria }
 }
 
 export default useFilter;
