@@ -1,9 +1,5 @@
 @use '../styles/variables' as *;
 
-body {
-  background-color: #F0E1E2;
-}
-
 table {
   background-color:  #e8e1f0;
   border-radius: $radius-lg;
@@ -30,11 +26,18 @@ td {
 
 h3, h4 {
   text-align: center;
-  padding: $spacing-md
+  padding: $spacing-md 
 }
 
 .installments {
   th, td {
     padding: $spacing-sm
+  }
+  margin-bottom: 40px;
+}
+
+@media (min-width: 800px) {
+  .backButton {
+    text-align: center;
   }
 }

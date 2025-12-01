@@ -5,6 +5,7 @@ import DebitCardIcon from '../assets/svg/debit_card.svg?react';
 import "./TransactionCard.scss";
 import { useNavigate } from "react-router-dom";
 import { formatCurrency } from "../utils/currencyUtils";
+import { formatPaymentType } from "../utils/paymentUtils";
 
 const TransactionCard = ({transaction}) => {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ const TransactionCard = ({transaction}) => {
       className={`transactionContainer transaction-${transaction.status}`} 
       key={transaction.id}
     >
-      <a onClick={navigateToTransaction}>
+      <a onClick={navigateToTransaction} className="transactionLink">
         <div className="transactionDetails">
           <div>
             <p className="transactionAmount">{formatCurrency(transaction.totalAmount)}</p> 
@@ -45,6 +46,7 @@ const TransactionCard = ({transaction}) => {
                 transaction.paymentMethod.type === "bank_account" && 
                 <BankIcon/>
               }
+              <span className="paymentTypeText">&nbsp;{formatPaymentType(transaction.paymentMethod.type)}</span>
             </p>
           </div>
           <div>

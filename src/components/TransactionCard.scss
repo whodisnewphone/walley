@@ -7,11 +7,38 @@
   padding: $spacing-sm;
   color: $color-text-primary;
   text-decoration: none;
+
+  width: 450px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.container {
+  width: 75%;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (max-width: 800px) {
+    width: 100%
+  }
+}
+
+.transactionList { 
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.transactionLink:hover {
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .transactionDetails {
   display: flex;
   text-align: center;
+  flex-basis: calc(50%);
 
 
   & div {
@@ -36,6 +63,17 @@
 .transactionSecondaryDetails {
   & div {
     width: 33.33%;
+  }
+}
+
+.transactionPaymentType {
+  display: inline-flex;
+  align-items: center;
+}
+
+.paymentTypeText {
+  @media (max-width: 800px) {
+    display: none;
   }
 }
 

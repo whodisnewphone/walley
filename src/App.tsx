@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import './styles/global.scss';
 import Dashboard from './pages/Dashboard';
 import TransactionContextProvider from './ctx/TransactionContext';
-import TransactionPage from './components/TransactionPage';
+import TransactionPage from './pages/TransactionPage';
 
 function App() {
   return (
