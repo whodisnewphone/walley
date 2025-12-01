@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { formatDate } from "../utils/dateUtils";
-import "./TransactionPage.scss";
+import "./TransactionDetails.scss";
 import { formatCurrency } from "../utils/currencyUtils";
 import { formatPaymentType } from "../utils/paymentUtils";
 
@@ -14,7 +14,7 @@ const TransactionDetails = ({currentTransaction}) => {
   return (
     <>
       <div className="backButton">
-        <button onClick={navigateToTransactions}>{'< back'}</button>
+        <button onClick={navigateToTransactions} type="button" name="back">{'< back'}</button>
       </div>
       
       <div>

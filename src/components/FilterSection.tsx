@@ -18,7 +18,7 @@ const FilterSection = () => {
   const startFilterByCustomDate = (e: FormEvent) => {
     e.preventDefault()
     const date = new Date(dateInputValue).toISOString();
-    
+
     if (!date) {
       alert("Incorrect date format, please try again")
     }
@@ -47,9 +47,9 @@ const FilterSection = () => {
 
   return (
     <>
-        <div className="text-center">
-      <p>Filter by status</p> 
+      <div className="text-center">
       <section className="filterContainer">
+        <h4>Filter by status</h4> 
         <button 
           onClick={() => setStatusFilter(null)} 
           type="button" 
@@ -99,9 +99,9 @@ const FilterSection = () => {
           ACTIVE
         </button>
       </section>
-      <p>Filter by payment type</p>
 
       <section>
+        <h4>Filter by payment type</h4>
         <button
           onClick={() => setPaymentTypeFilter(null)} 
           type="button" 
@@ -128,8 +128,8 @@ const FilterSection = () => {
         </button>
       </section>
 
-      <p>Filter by date</p>
       <section>
+        <h4>Filter by date</h4>
         <button 
           onClick={() => startFilterByDays("30")} 
           type="button" 
@@ -161,7 +161,7 @@ const FilterSection = () => {
             value={dateInputValue} 
             onChange={handleInputChange}
           />
-          <span><button type="submit">GO</button></span>
+          <span><button type="submit" name="go">GO</button></span>
         </form>
       </section>
     </div>
