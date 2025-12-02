@@ -2,6 +2,7 @@ import { useContext, useEffect, useState, type FormEvent } from "react"
 import { getDateInThePast } from "../utils/dateUtils"
 import useFilter from "../hooks/useFilter"
 import { TransactionContext } from "../ctx/TransactionContext"
+import { useAnalytics } from "../hooks/useAnalytics"
 
 const FilterSection = () => {
   const { 
@@ -10,6 +11,7 @@ const FilterSection = () => {
     displayedTransactions 
   } = useContext(TransactionContext)
   const { filterByCriteria } = useFilter()
+  const analytics = useAnalytics();
 
   const [dateFilterDouble, setDateFilterDouble] = useState<string>(null)
   const [dateInputValue, setDateInputValue] = useState<string>("")
@@ -41,6 +43,7 @@ const FilterSection = () => {
   }
 
   useEffect(() => {
+    analytics.track('transactions_filtered_by', { status: statusFilter, payment: paymentTypeFilter, date: dateFilter});
     filterByCriteria()
   }, [statusFilter, paymentTypeFilter, dateFilter])
   

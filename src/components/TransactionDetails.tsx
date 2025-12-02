@@ -3,13 +3,21 @@ import { formatDate } from "../utils/dateUtils";
 import "./TransactionDetails.scss";
 import { formatCurrency } from "../utils/currencyUtils";
 import { formatPaymentType } from "../utils/paymentUtils";
+import { useAnalytics } from "../hooks/useAnalytics";
+import { useEffect } from "react";
 
 const TransactionDetails = ({currentTransaction}) => {
   const navigate = useNavigate();
+  const analytics = useAnalytics();
   
   const navigateToTransactions = () => {
+    analytics.track('transaction_back', { transactionId: currentTransaction.id });
     navigate("/")
   }
+
+  useEffect( () => {
+    analytics.track('transaction_viewed', { transactionId: currentTransaction.id });
+  }, [])
 
   return (
     <>
