@@ -1,0 +1,97 @@
+@use '../styles/variables' as *;
+
+.transactionContainer {
+  border: 2px solid black;
+  border-radius: $radius-md;
+  margin: $spacing-sm;
+  padding: $spacing-sm;
+  color: $color-text-primary;
+  text-decoration: none;
+
+  width: 450px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.container {
+  width: 75%;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (max-width: 800px) {
+    width: 100%
+  }
+}
+
+.transactionList { 
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.transactionLink:hover {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.transactionDetails {
+  display: flex;
+  text-align: center;
+  flex-basis: calc(50%);
+
+  & div {
+    width: 50%;
+  }
+
+  .transactionAmount {
+    font-size: $font-size-xxl;
+    font-weight: $font-weight-bold;
+  }
+
+  .transactionMerchant {
+    font-size: $font-size-xxl;
+    font-weight: $font-weight-medium;
+  }
+
+  .transactionDate, transactionPaymentType {
+    font-size: $font-size-base;
+  }
+}
+
+.transactionSecondaryDetails {
+  & div {
+    width: 33.33%;
+  }
+}
+
+.transactionPaymentType {
+  display: inline-flex;
+  align-items: center;
+}
+
+.paymentTypeText {
+  @media (max-width: 800px) {
+    display: none;
+  }
+}
+
+.transaction-failed {
+  background-color: $color-error-light;
+}
+
+.transaction-completed {
+  background-color: $color-success-light;
+}
+
+.transaction-pending {
+  background-color: $color-info-light;
+}
+
+.transaction-cancelled {
+  background-color: $color-cancelled-light;
+}
+
+.transaction-active {
+  background-color: $color-warning-light;
+}
