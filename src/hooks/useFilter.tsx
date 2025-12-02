@@ -7,7 +7,7 @@ const useFilter = () => {
     statusFilter, paymentTypeFilter, dateFilter } = useContext(TransactionContext)
 
   const filterByCriteria = () => {
-    let activeFilters = []
+    let activeFilters: string[] = []
 
     //build up all the filter values so you only traverse the array once
     if (statusFilter) {
@@ -30,9 +30,6 @@ const useFilter = () => {
     }
 
     let filteredData = transactions.filter(item => {
-      // if (activeFiltersKeys.length === 1 && dateFilter) {
-      //   return isDateInRange(item.purchaseDate, dateFilter, new Date().toISOString())
-      // }
       return activeFiltersKeys.every(key => {
         if (key === "purchaseDate") {
           return isDateInRange(item.purchaseDate, dateFilter, new Date().toISOString())
